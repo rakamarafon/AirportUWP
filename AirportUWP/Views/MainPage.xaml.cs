@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirportUWP.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,33 @@ namespace AirportUWP
         public MainPage()
         {
             this.InitializeComponent();
+
+            myFrame.Navigate(typeof(PilotsView));
+            TitleTextBlock.Text = "Pilots";
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (home.IsSelected)
+            {
+                myFrame.Navigate(typeof(PilotsView));
+                TitleTextBlock.Text = "Pilots";
+            }
+            else if (share.IsSelected)
+            {
+                myFrame.Navigate(typeof(PilotsView));
+                TitleTextBlock.Text = "Stewardesses";
+            }
+            else if (settings.IsSelected)
+            {
+                myFrame.Navigate(typeof(PilotsView));
+                TitleTextBlock.Text = "Crews";
+            }
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            mySplitView.IsPaneOpen = !mySplitView.IsPaneOpen;
         }
     }
 }
