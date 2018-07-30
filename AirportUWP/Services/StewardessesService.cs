@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace AirportUWP.Services
 {
-    public class PilotService : IPilot
+    public class StewardessesService : IStewardesses
     {
-        private string URL = "http://localhost:5000/api/Pilots";
+        private string URL = "http://localhost:5000/api/Stewardesses";
 
-        public async Task<bool> Create(Pilot pilot)
+        public async Task<bool> Create(Stewardesses stewardesses)
         {
-            string temp = JsonConvert.SerializeObject(pilot);
+            string temp = JsonConvert.SerializeObject(stewardesses);
             var httpContent = new StringContent(temp, Encoding.UTF8, "application/json");
             using (var client = new HttpClient())
             {
-                var response = await client.PostAsync(URL, httpContent);
+                var response = await client.PostAsync( URL, httpContent);
                 if (response.IsSuccessStatusCode) return true;
                 return false;
             }
@@ -35,33 +35,33 @@ namespace AirportUWP.Services
             }
         }
 
-        public async Task<IEnumerable<Pilot>> Get()
+        public async Task<IEnumerable<Stewardesses>> Get()
         {
             string responceString;
             using (var client = new HttpClient())
             {
                 try
                 {
-                   responceString = await client.GetStringAsync(URL);
+                    responceString = await client.GetStringAsync(URL);
                 }
                 catch (Exception e)
                 {
-                   return null;
+                    return null;
                 }
             }
 
-            var json = JsonConvert.DeserializeObject<IEnumerable<Pilot>>(responceString);
+            var json = JsonConvert.DeserializeObject<IEnumerable<Stewardesses>>(responceString);
 
             return json;
         }
 
-        public async Task<bool> Update(Pilot pilot)
+        public async Task<bool> Update(Stewardesses stewardesses)
         {
-            string temp = JsonConvert.SerializeObject(pilot);
+            string temp = JsonConvert.SerializeObject(stewardesses);
             var httpContent = new StringContent(temp, Encoding.UTF8, "application/json");
             using (var client = new HttpClient())
             {
-                var response = await client.PutAsync(string.Format("{0}/{1}", URL, pilot.Id), httpContent);
+                var response = await client.PutAsync(string.Format("{0}/{1}", URL, stewardesses.Id), httpContent);
                 if (response.IsSuccessStatusCode) return true;
                 return false;
             }

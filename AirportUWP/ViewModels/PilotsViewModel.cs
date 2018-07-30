@@ -3,6 +3,9 @@ using GalaSoft.MvvmLight.Views;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using AirportUWP.Services;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
 
 namespace AirportUWP.ViewModels
 {
@@ -11,15 +14,26 @@ namespace AirportUWP.ViewModels
         private INavigationService _navigationService;
         private IPilot service;
 
+        private async Task Load()
+        {
+            this.Pilots = new ObservableCollection<Pilot>(await service.Get());
+
+            RaisePropertyChanged(nameof(Pilots));
+        }
         public PilotsViewModel(INavigationService navigationService, IPilot service)
         {
             _navigationService = navigationService;
             this.service = service;
+            SearchCommand = new RelayCommand(search);
+            CreateCommand = new RelayCommand(create);
             Pilots = new ObservableCollection<Pilot>();
-
-            Pilots =  (ObservableCollection<Pilot>)service.Get().Result;
+            MessengerInstance.Register<Pilot>(this, m =>
+            {
+                Load();
+            });
+            Load();
         }
-
+    
         public ObservableCollection<Pilot> Pilots { get; private set; }
 
         private Pilot _selectedPilot;
@@ -36,6 +50,39 @@ namespace AirportUWP.ViewModels
                 }
                 RaisePropertyChanged(() => SelectedPilot);
             }
+        }
+
+        private string _searchFilter;
+        public string SearchFilter
+        {
+            get { return _searchFilter; }
+            set
+            {
+                _searchFilter = value;
+                RaisePropertyChanged(() => SearchFilter);
+            }
+        }
+
+        public ICommand SearchCommand { get; set; }
+
+        private async void search()
+        {
+            Pilots.Clear();
+            if (string.IsNullOrWhiteSpace(SearchFilter))
+            {
+                foreach (var pilot in await service.Get())
+                {
+                    Pilots.Add(pilot);
+                }
+            }
+        }
+
+        public ICommand CreateCommand { get; set; }
+
+        private void create()
+        {
+            MessengerInstance.Send(new Pilot());
+            _navigationService.NavigateTo(nameof(PilotDetailViewModel));
         }
     }
 }

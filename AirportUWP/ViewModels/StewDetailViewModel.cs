@@ -6,37 +6,35 @@ using System.Windows.Input;
 
 namespace AirportUWP.ViewModels
 {
-    public class PilotDetailViewModel : BaseViewModel
+    public class StewDetailViewModel : BaseViewModel
     {
-        private Pilot _model;
+        private Stewardesses _model;
         private INavigationService _navigationService;
-        private IPilot service;
+        private IStewardesses service;
 
-        public PilotDetailViewModel(INavigationService navigationService, IPilot service)
+        public StewDetailViewModel(INavigationService navigationService, IStewardesses service)
         {
-            this.service = service;
-            _model = new Pilot();
+            _model = new Stewardesses();
             _navigationService = navigationService;
-
+            this.service = service;
             Title = "Student Details";
 
             GoBackCommand = new RelayCommand(goBack);
             DeleteCommand = new RelayCommand(del);
             SaveCommand = new RelayCommand(save);
 
-            MessengerInstance.Register<Pilot>(this, m =>
+            MessengerInstance.Register<Stewardesses>(this, m =>
             {
                 _model = m;
                 RaisePropertyChanged(() => Model.Id);
                 RaisePropertyChanged(() => Model.FirstName);
                 RaisePropertyChanged(() => Model.SecondName);
-                RaisePropertyChanged(() => Model.Birthday);
-                RaisePropertyChanged(() => Model.Experience);
+                RaisePropertyChanged(() => Model.BirthDay);
                 RaisePropertyChanged(() => Model.CrewModelId);
-            });            
+            });
         }
 
-        public Pilot Model
+        public Stewardesses Model
         {
             get => _model;
             set => _model = value;
@@ -53,7 +51,7 @@ namespace AirportUWP.ViewModels
 
         private async void del()
         {
-           await service.Delete(_model.Id);
+            await service.Delete(_model.Id);
             MessengerInstance.Send(_model);
             goBack();
         }
@@ -62,7 +60,7 @@ namespace AirportUWP.ViewModels
 
         private async void save()
         {
-            if(_model.Id == 0)
+            if (_model.Id == 0)
             {
                 await service.Create(_model);
                 MessengerInstance.Send(_model);
@@ -73,7 +71,7 @@ namespace AirportUWP.ViewModels
                 await service.Update(_model);
                 MessengerInstance.Send(_model);
                 goBack();
-            }            
+            }
         }
     }
 }

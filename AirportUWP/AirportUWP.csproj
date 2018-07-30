@@ -95,10 +95,32 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Crew.cs" />
+    <Compile Include="Models\Stewardesses.cs" />
+    <Compile Include="Services\CrewService.cs" />
+    <Compile Include="Services\ICrew.cs" />
+    <Compile Include="Services\IStewardesses.cs" />
     <Compile Include="Services\PilotService.cs" />
+    <Compile Include="Services\StewardessesService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CrewDetailViewModel.cs" />
+    <Compile Include="ViewModels\CrewsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PilotDetailViewModel.cs" />
+    <Compile Include="ViewModels\StewardessesViewModel.cs" />
+    <Compile Include="ViewModels\StewDetailViewModel.cs" />
+    <Compile Include="Views\CrewDetailView.xaml.cs">
+      <DependentUpon>CrewDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CrewsView.xaml.cs">
+      <DependentUpon>CrewsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PilotDetailView.xaml.cs">
+      <DependentUpon>PilotDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StewardessesView.xaml.cs">
+      <DependentUpon>StewardessesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PilotsView.xaml.cs">
       <DependentUpon>PilotsView.xaml</DependentUpon>
     </Compile>
@@ -110,6 +132,9 @@
     <Compile Include="Services\IPilot.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\PilotsViewModel.cs" />
+    <Compile Include="Views\StewDetailView.xaml.cs">
+      <DependentUpon>StewDetailView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -132,6 +157,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\CrewDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CrewsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PilotDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StewardessesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PilotsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -139,6 +180,10 @@
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\StewDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
