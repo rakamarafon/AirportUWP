@@ -6,6 +6,8 @@ using AirportUWP.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using System.Linq;
+using System;
 
 namespace AirportUWP.ViewModels
 {
@@ -71,6 +73,19 @@ namespace AirportUWP.ViewModels
             if (string.IsNullOrWhiteSpace(SearchFilter))
             {
                 foreach (var pilot in await service.Get())
+                {
+                    Pilots.Add(pilot);
+                }
+            }
+            else
+            {
+                var temp = await service.Get();
+                foreach (var pilot in temp.Where(s => s.FirstName.StartsWith(SearchFilter, StringComparison.CurrentCultureIgnoreCase)
+                                            || s.SecondName.StartsWith(SearchFilter, StringComparison.CurrentCultureIgnoreCase)))
+                {
+                    Pilots.Add(pilot);
+                }
+                foreach (var pilot in temp.Where(x => x.Experience.ToString().StartsWith(SearchFilter)))
                 {
                     Pilots.Add(pilot);
                 }

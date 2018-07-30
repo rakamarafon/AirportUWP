@@ -29,10 +29,11 @@ namespace AirportUWP.ViewModels
             this.service = service;
             Stewardesses = new ObservableCollection<Stewardesses>();
             CreateCommand = new RelayCommand(create);
-            Load();
+            SearchCommand = new RelayCommand(search);
+            Load().GetAwaiter();
             MessengerInstance.Register<Stewardesses>(this, m =>
             {
-                Load();
+                Load().GetAwaiter();
             });
         }
 
@@ -75,6 +76,19 @@ namespace AirportUWP.ViewModels
                 foreach (var stew in await service.Get())
                 {
                     Stewardesses.Add(stew);
+                }
+            }
+            else
+            {
+                var temp = await service.Get();
+                foreach (var pilot in temp.Where(s => s.FirstName.StartsWith(SearchFilter, StringComparison.CurrentCultureIgnoreCase)
+                                            || s.SecondName.StartsWith(SearchFilter, StringComparison.CurrentCultureIgnoreCase)))
+                {
+                    Stewardesses.Add(pilot);
+                }
+                foreach (var pilot in temp.Where(x => x.CrewModelId.ToString().StartsWith(SearchFilter)))
+                {
+                    Stewardesses.Add(pilot);
                 }
             }
         }

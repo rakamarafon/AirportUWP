@@ -95,7 +95,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Aircraft.cs" />
+    <Compile Include="Models\AirType.cs" />
     <Compile Include="Models\Crew.cs" />
+    <Compile Include="Models\Departure.cs" />
     <Compile Include="Models\Stewardesses.cs" />
     <Compile Include="Services\CrewService.cs" />
     <Compile Include="Services\ICrew.cs" />
