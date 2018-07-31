@@ -41,6 +41,11 @@ namespace AirportUWP
                 myFrame.Navigate(typeof(AirTypesView));
                 TitleTextBlock.Text = "Air types";
             }
+            else if (aircraft.IsSelected)
+            {
+                myFrame.Navigate(typeof(AircraftsView));
+                TitleTextBlock.Text = "Aircrafts";
+            }
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)

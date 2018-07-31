@@ -6,9 +6,85 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+     DataContext="{Binding AirCraftsVMInstance, Source={StaticResource Locator}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
 
+        <TextBlock Text="{Binding Title}"
+            Margin="18"
+            TextAlignment="Center"
+            Grid.Row="0"
+            Grid.Column="0"/>
+        <TextBox Text="{Binding SearchFilter, Mode=TwoWay}"
+            Margin="18"
+            TextAlignment="Left"
+            PlaceholderText="Stewardesses name..."
+            Grid.Row="0"
+            Grid.Column="1"/>
+        <Button Content="Search"
+            Command="{Binding SearchCommand}"
+            HorizontalAlignment="Stretch"
+            Foreground="White"
+            Margin="18"
+            Grid.Row="0"
+            Grid.Column="2"/>
+        <Button Content="Create"
+            Command="{Binding CreateCommand}"
+            HorizontalAlignment="Stretch"
+            Foreground="White"
+            Margin="18"
+            Grid.Row="0"
+            Grid.Column="0"/>
+
+        <ListView Grid.ColumnSpan="3" Grid.Row="1" ItemsSource="{Binding AirCrafts}" SelectedItem="{Binding SelectedAirCraft, Mode=TwoWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24"/>
+                            <RowDefinition Height="24"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding Name}"
+                                   Foreground="Black"
+                                   FontSize="16"
+                                   Padding="20,0,0,0"
+                                   Grid.Column="1"
+                                   Grid.Row="0"/>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Grid.Column="1"
+                                    Grid.Row="1">
+                            <TextBlock Text="{Binding ReleaseDate}"
+                                   Foreground="#444444"
+                                   FontSize="13"
+                                   Padding="20,0,0,0"/>
+                            <TextBlock Text="Experiance:"
+                                   Foreground="#888888"
+                                   FontSize="13"
+                                   Padding="20,0,0,0"/>
+                            <TextBlock Text="{Binding LifeTime}"
+                                   Foreground="#444444"
+                                   FontSize="13"
+                                   Padding="6,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

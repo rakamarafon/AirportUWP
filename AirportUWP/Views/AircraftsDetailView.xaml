@@ -6,9 +6,76 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+     DataContext="{Binding AirCraftDetailVMInstance, Source={StaticResource Locator}}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="55"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <TextBlock Text="{Binding Title}"
+            Margin="18"
+            TextAlignment="Center"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"/>
+        <Button Content="&#xE72B;"
+            FontFamily="Segoe MDL2 Assets"
+            Command="{Binding GoBackCommand}"
+            FontSize="20"
+            Foreground="White"
+            Margin="18"
+            Grid.Row="0"
+            Grid.Column="0"/>
+
+        <TextBlock Text="Name:"
+            Grid.Column="0"
+            Grid.Row="2"/>
+        <TextBox Text="{Binding Model.Name, Mode=TwoWay}"
+            Grid.Column="1"
+            Grid.Row="2"/>
+
+        <TextBlock Text="LifeTime:"
+            Grid.Column="0"
+            Grid.Row="3"/>
+        <TextBox Text="{Binding Model.LifeTime, Mode=TwoWay}"
+            Grid.Column="1"
+            Grid.Row="3"/>
+
+        <TextBlock Text="Release Date:"
+            Grid.Column="0"
+            Grid.Row="4"/>
+        <TextBox Text="{Binding Model.ReleaseDate, Mode=TwoWay}"
+            Grid.Column="1"
+            Grid.Row="4"/>
+
+        <TextBlock Text="Crew ID:"
+            Grid.Column="0"
+            Grid.Row="5"/>
+        <TextBox Text="{Binding Model.AirTypeModelId, Mode=TwoWay}"
+            Grid.Column="1"
+            Grid.Row="5"/>
+
+        <Button Content="Save"
+            Command="{Binding SaveCommand}"
+            Background="Green"
+            Grid.Row="7"
+            Grid.Column="0"/>
+
+        <Button Content="Delete"
+            Command="{Binding DeleteCommand}"
+            Background="Red"
+            Grid.Row="7"
+            Grid.Column="1"/>
     </Grid>
 </Page>

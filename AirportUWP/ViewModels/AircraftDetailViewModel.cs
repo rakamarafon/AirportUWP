@@ -22,7 +22,7 @@ namespace AirportUWP.ViewModels
             _model = new Aircraft();
             _navigationService = navigationService;
             this.service = service;
-            Title = "AirType Details";
+            Title = "Aircraft Details";
 
             GoBackCommand = new RelayCommand(goBack);
             DeleteCommand = new RelayCommand(del);
