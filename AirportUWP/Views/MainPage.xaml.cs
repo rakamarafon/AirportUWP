@@ -21,20 +21,25 @@ namespace AirportUWP
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (home.IsSelected)
+            if (pilots.IsSelected)
             {
                 myFrame.Navigate(typeof(PilotsView));
                 TitleTextBlock.Text = "Pilots";
             }
-            else if (share.IsSelected)
+            else if (steward.IsSelected)
             {
                 myFrame.Navigate(typeof(StewardessesView));
                 TitleTextBlock.Text = "Stewardesses";
             }
-            else if (settings.IsSelected)
+            else if (crews.IsSelected)
             {
                 myFrame.Navigate(typeof(CrewsView));
                 TitleTextBlock.Text = "Crews";
+            }
+            else if (airtypes.IsSelected)
+            {
+                myFrame.Navigate(typeof(AirTypesView));
+                TitleTextBlock.Text = "Air types";
             }
         }
 

@@ -2,39 +2,43 @@
 using AirportUWP.Services;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AirportUWP.ViewModels
 {
-    public class StewDetailViewModel : BaseViewModel
+    public class AirTypeDetailViewModel : BaseViewModel
     {
-        private Stewardesses _model;
+        private AirType _model;
         private INavigationService _navigationService;
-        private IStewardesses service;
+        private IAirType service;
 
-        public StewDetailViewModel(INavigationService navigationService, IStewardesses service)
+        public AirTypeDetailViewModel(INavigationService navigationService, IAirType service)
         {
-            _model = new Stewardesses();
+            _model = new AirType();
             _navigationService = navigationService;
             this.service = service;
-            Title = "Stewardesses Details";
+            Title = "AirType Details";
 
             GoBackCommand = new RelayCommand(goBack);
             DeleteCommand = new RelayCommand(del);
             SaveCommand = new RelayCommand(save);
 
-            MessengerInstance.Register<Stewardesses>(this, m =>
+            MessengerInstance.Register<AirType>(this, m =>
             {
                 _model = m;
                 RaisePropertyChanged(() => Model.Id);
-                RaisePropertyChanged(() => Model.FirstName);
-                RaisePropertyChanged(() => Model.SecondName);
-                RaisePropertyChanged(() => Model.BirthDay);
-                RaisePropertyChanged(() => Model.CrewModelId);
+                RaisePropertyChanged(() => Model.Model);
+                RaisePropertyChanged(() => Model.SeatsNumber);
+                RaisePropertyChanged(() => Model.FlightDataModelId);
             });
         }
 
-        public Stewardesses Model
+        public AirType Model
         {
             get => _model;
             set => _model = value;

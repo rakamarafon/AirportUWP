@@ -12,46 +12,47 @@ using System.Windows.Input;
 
 namespace AirportUWP.ViewModels
 {
-    public class StewardessesViewModel : BaseViewModel
+    public class AirTypesViewModel : BaseViewModel
     {
         private INavigationService _navigationService;
-        private IStewardesses service;
+        private IAirType service;
 
         private async Task Load()
         {
-            this.Stewardesses = new ObservableCollection<Stewardesses>(await service.Get());
+            this.AirTypes = new ObservableCollection<AirType>(await service.Get());
 
             RaisePropertyChanged(nameof(Stewardesses));
         }
-        public StewardessesViewModel(INavigationService navigationService, IStewardesses service)
+
+        public AirTypesViewModel(INavigationService navigationService, IAirType service)
         {
             _navigationService = navigationService;
             this.service = service;
-            Stewardesses = new ObservableCollection<Stewardesses>();
+            AirTypes = new ObservableCollection<AirType>();
             CreateCommand = new RelayCommand(create);
             SearchCommand = new RelayCommand(search);
             Load().GetAwaiter();
-            MessengerInstance.Register<Stewardesses>(this, m =>
+            MessengerInstance.Register<AirType>(this, m =>
             {
                 Load().GetAwaiter();
             });
         }
 
-        public ObservableCollection<Stewardesses> Stewardesses { get; private set; }
+        public ObservableCollection<AirType> AirTypes { get; private set; }
 
-        private Stewardesses _selectedStewardesses;
-        public Stewardesses SelectedStewardesses
+        private AirType _selectedAirType;
+        public AirType SelectedAirType
         {
-            get { return _selectedStewardesses; }
+            get { return _selectedAirType; }
             set
             {
-                _selectedStewardesses = value;
-                if (_selectedStewardesses != null)
+                _selectedAirType = value;
+                if (_selectedAirType != null)
                 {
-                    MessengerInstance.Send(_selectedStewardesses);
-                    _navigationService.NavigateTo(nameof(StewDetailViewModel));
+                    MessengerInstance.Send(_selectedAirType);
+                    _navigationService.NavigateTo(nameof(AirTypeDetailViewModel));
                 }
-                RaisePropertyChanged(() => SelectedStewardesses);
+                RaisePropertyChanged(() => SelectedAirType);
             }
         }
 
@@ -70,25 +71,25 @@ namespace AirportUWP.ViewModels
 
         private async void search()
         {
-            Stewardesses.Clear();
+            AirTypes.Clear();
             if (string.IsNullOrWhiteSpace(SearchFilter))
             {
-                foreach (var stew in await service.Get())
+                foreach (var airT in await service.Get())
                 {
-                    Stewardesses.Add(stew);
+                    AirTypes.Add(airT);
                 }
             }
             else
             {
                 var temp = await service.Get();
-                foreach (var st in temp.Where(s => s.FirstName.StartsWith(SearchFilter, StringComparison.CurrentCultureIgnoreCase)
-                                            || s.SecondName.StartsWith(SearchFilter, StringComparison.CurrentCultureIgnoreCase)))
+                foreach (var airT in temp.Where(s => s.Model.StartsWith(SearchFilter, StringComparison.CurrentCultureIgnoreCase)
+                                            || s.SeatsNumber.ToString().StartsWith(SearchFilter, StringComparison.CurrentCultureIgnoreCase)))
                 {
-                    Stewardesses.Add(st);
+                    AirTypes.Add(airT);
                 }
-                foreach (var s in temp.Where(x => x.CrewModelId.ToString().StartsWith(SearchFilter)))
+                foreach (var airT in temp.Where(x => x.FlightDataModelId.ToString().StartsWith(SearchFilter)))
                 {
-                    Stewardesses.Add(s);
+                    AirTypes.Add(airT);
                 }
             }
         }
@@ -97,9 +98,8 @@ namespace AirportUWP.ViewModels
 
         private void create()
         {
-            MessengerInstance.Send(new Stewardesses());
-            _navigationService.NavigateTo(nameof(StewDetailViewModel));
+            MessengerInstance.Send(new AirType());
+            _navigationService.NavigateTo(nameof(AirTypeDetailViewModel));
         }
-
     }
 }
