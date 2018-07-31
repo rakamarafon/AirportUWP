@@ -1,4 +1,5 @@
-﻿using AirportUWP.Services;
+﻿using AirportUWP.Interfaces;
+using AirportUWP.Services;
 using AirportUWP.ViewModels;
 using AirportUWP.Views;
 using CommonServiceLocator;
@@ -24,6 +25,8 @@ namespace AirportUWP
             navigationService.Configure(nameof(CrewDetailViewModel), typeof(CrewDetailView));
             navigationService.Configure(nameof(AirTypesViewModel), typeof(AirTypesView));
             navigationService.Configure(nameof(AirTypeDetailViewModel), typeof(AirTypeDetailView));
+            navigationService.Configure(nameof(AircraftsViewModel), typeof(AircraftsView));
+            navigationService.Configure(nameof(AircraftDetailViewModel), typeof(AircraftsDetailView));
 
 
             if (ViewModelBase.IsInDesignModeStatic)
@@ -48,18 +51,22 @@ namespace AirportUWP
             SimpleIoc.Default.Register<CrewDetailViewModel>();
             SimpleIoc.Default.Register<AirTypesViewModel>();
             SimpleIoc.Default.Register<AirTypeDetailViewModel>();
+            SimpleIoc.Default.Register<AircraftsViewModel>();
+            SimpleIoc.Default.Register<AircraftDetailViewModel>();
 
 
             SimpleIoc.Default.Register<IPilot, PilotService>();
             SimpleIoc.Default.Register<IStewardesses, StewardessesService>();
             SimpleIoc.Default.Register<ICrew, CrewService>();
             SimpleIoc.Default.Register<IAirType, AirTypeService>();
+            SimpleIoc.Default.Register<IAircraft, AircraftService>();
 
 
             ServiceLocator.Current.GetInstance<PilotDetailViewModel>();
             ServiceLocator.Current.GetInstance<StewDetailViewModel>();
             ServiceLocator.Current.GetInstance<CrewDetailViewModel>();
             ServiceLocator.Current.GetInstance<AirTypeDetailViewModel>();
+            ServiceLocator.Current.GetInstance<AircraftDetailViewModel>();
         }
         public MainViewModel MainVMInstance
         {
@@ -130,6 +137,21 @@ namespace AirportUWP
             get
             {
                 return ServiceLocator.Current.GetInstance<AirTypeDetailViewModel>();
+            }
+        }
+
+        public AircraftsViewModel AirCraftsVMInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AircraftsViewModel>();
+            }
+        }
+        public AircraftDetailViewModel AirCraftDetailVMInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AircraftDetailViewModel>();
             }
         }
 

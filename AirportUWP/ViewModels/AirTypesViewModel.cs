@@ -21,7 +21,7 @@ namespace AirportUWP.ViewModels
         {
             this.AirTypes = new ObservableCollection<AirType>(await service.Get());
 
-            RaisePropertyChanged(nameof(Stewardesses));
+            RaisePropertyChanged(nameof(AirTypes));
         }
 
         public AirTypesViewModel(INavigationService navigationService, IAirType service)
